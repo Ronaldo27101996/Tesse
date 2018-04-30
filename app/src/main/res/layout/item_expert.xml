@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:background="#a9a7a7"
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/logodark"
+                    app:civ_border_color="#FF000000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:id="@+id/txtName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phan Ky Giang"
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="end">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_gravity="end">
+
+                                <ImageView
+                                    android:id="@+id/imgOnOff"
+                                    android:layout_width="10dp"
+                                    android:layout_height="10dp"
+                                    android:src="@drawable/icon_offline" />
+
+                                <TextView
+                                    android:id="@+id/txtOnOff"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:textSize="12sp"
+                                    android:text="Offline" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal"
+                        android:padding="3dp">
+
+                        <TextView
+                            android:id="@+id/txtCareer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/imgAvatar"
+                            android:text="Mobile Programing"
+                            android:textColor="#504d4d"
+                            android:textSize="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="end">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_gravity="end">
+
+                                <RatingBar
+                                    android:id="@+id/rating"
+                                    style="?android:attr/ratingBarStyleSmall"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:isIndicator="true"
+                                    android:clickable="false"
+
+                                    android:layout_gravity="center"
+                                    android:numStars="1"
+                                    android:stepSize="0.1" />
+
+                                <TextView
+                                    android:id="@+id/txtStar"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="0" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_location" />
+
+                        <TextView
+                            android:id="@+id/txtCountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Việt Nam" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+                <ImageView
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/btnCall"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_phone"
+                    android:background="#d6d2d2" />
+                <ImageView
+                    android:layout_weight="3"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/btnChat"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_chat"
+                    android:background="#d6d2d2" />
+                <ImageView
+                    android:layout_weight="2"
+                    android:padding="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/btnDate"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_datetime"
+                    android:background="#d6d2d2" />
+                <ImageView
+                    android:layout_weight="2"
+                    android:padding="5dp"
+                    android:id="@+id/btnMap"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_map"
+                    android:background="#d6d2d2" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

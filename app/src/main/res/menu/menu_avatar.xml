@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:showAsAction="always"
+    >
+    <item android:id="@+id/dakota"
+        android:title="Dakota"
+        android:contentDescription="https://znews-photo-td.zadn.vn/w960/Uploaded/mdf_drkydd/2017_04_12/8up.jpg"
+        />
+    <item android:id="@+id/eva"
+        android:title="Eva Green"
+        android:contentDescription="https://media.wmagazine.com/photos/58540202c7188f9b26c951c5/2:3/w_640/0816.w.MM_.eva_.lo30_View5-copy-copy_RGB.jpg"
+        />
+    <item android:id="@+id/scarlet"
+        android:title="Scarlett Johansson"
+        android:contentDescription="http://hot97svg.com/wp-content/uploads/2018/01/Scarlett-Johansson-2014-1170x658.jpg"
+        />
+
+    <item android:id="@+id/olsen"
+        android:title="Elizabeth Olsen"
+        android:contentDescription="https://i-giaitri.vnecdn.net/2016/05/06/elizabeth-olsen-01-1462524673_680x0.jpg"/>
+
+    <item android:id="@+id/taylor"
+        android:title="Taylor Swift"
+        android:contentDescription="https://wallpapersmug.com/large/8ef669/sunglasses_taylor_swift_white_dress.jpg"/>
+</menu>

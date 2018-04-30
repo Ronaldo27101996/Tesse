@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="300dp"
+    android:layout_height="350dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtMessage"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Make an appointment with expert"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set time"
+        android:textColor="#000"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_gravity="left"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20/12/2018"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Time"/>
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="15:30pm"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message"
+            android:textColor="#000"
+
+            />
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:background="#edcf0a"
+        android:text="Send request"
+        android:layout_margin="20dp"
+        />
+</LinearLayout>
+
+</LinearLayout>
