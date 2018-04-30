@@ -37,33 +37,7 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-//        imgMenu.setOnClickListener(new View.OnClickListener() {
-//            @SuppressLint("RestrictedApi")
-//            @Override
-//            public void onClick(View view) {
-//                // have to use menu builder because popup not support icon ->> but it is in the LEFT :((
-//                MenuBuilder menuBuilder =new MenuBuilder(ContainerActivity.this);
-//                MenuInflater inflater = new MenuInflater(ContainerActivity.this);
-//                inflater.inflate(R.menu.menu_category, menuBuilder);
-//                MenuPopupHelper optionsMenu = new MenuPopupHelper(ContainerActivity.this, menuBuilder, view);
-//                optionsMenu.setForceShowIcon(true);
-//// Set Item Click Listener
-//                menuBuilder.setCallback(new MenuBuilder.Callback() {
-//                    @Override
-//                    public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
-//                        Toast.makeText(ContainerActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    }
-//
-//                    @Override
-//                    public void onMenuModeChange(MenuBuilder menu) {}
-//                });
-//
-//
-//                // Display the menu
-//                optionsMenu.show();
-//            }
-//        });
+
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,9 +67,9 @@ public class ContainerActivity extends AppCompatActivity {
                             if (LoginActivity.isExpert == 1) {
                                 Toast.makeText(ContainerActivity.this, "You are expert already!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Expert expert = (Expert) getIntent().getSerializableExtra("expert");
+                                User user = (User) getIntent().getSerializableExtra("user");
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("expert", expert);
+                                bundle.putSerializable("user", user);
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 BecomeExpert_Fragment becomeExpert_fragment = new BecomeExpert_Fragment();
@@ -116,11 +90,11 @@ public class ContainerActivity extends AppCompatActivity {
     private void addControls() {
         //imgMenu =findViewById(R.id.imgMenu);
         imgAvatar = findViewById(R.id.imgAvatar);
-        Expert expert = (Expert) getIntent().getSerializableExtra("expert");
+        User user = (User) getIntent().getSerializableExtra("user");
         Bundle bundle = new Bundle();
-        bundle.putSerializable("expert", expert);
+        bundle.putSerializable("user", user);
         Glide.with(ContainerActivity.this)
-                .load(expert.getImage())
+                .load(user.getAvatar())
                 .into(imgAvatar);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

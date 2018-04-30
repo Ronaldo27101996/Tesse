@@ -45,7 +45,7 @@ import retrofit2.Response;
  */
 
 public class BecomeExpert_Fragment extends Fragment {
-    Expert expert;
+    User user;
     ImageView imgAva;
     EditText txtFirstName, txtLastName, txtEmail, txtPass, txtSDT, txtCountry, txtAddress;
     AutoCompleteTextView txtCareer;
@@ -74,7 +74,7 @@ public class BecomeExpert_Fragment extends Fragment {
     private void addControls(View view) {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            expert = (Expert) bundle.getSerializable("expert");
+            user = (User) bundle.getSerializable("user");
         }
 
 
@@ -92,26 +92,12 @@ public class BecomeExpert_Fragment extends Fragment {
         //loadData();
         txtSkill.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         txtCareer.setThreshold(1);
-        txtEmail.setText(expert.getIdExpert());
-        txtFirstName.setText(expert.getfName());
-        txtLastName.setText(expert.getlName());
-        txtSDT.setText(expert.getSdt());
-        txtPass.setText(expert.getPassword());
-        txtCountry.setText(expert.getCountry());
-        Glide.with(getActivity()).load(expert.getImage()).into(imgAva);
-//        if(LoginActivity.isExpert==1){
-//            Toast.makeText(getActivity(),    "IsExpert =1 ", Toast.LENGTH_SHORT).show();
-//            loadData();
-//            for (int i = 0; i < arrCareer.size(); i++) {
-//                if (arrCareer.get(i).equals(expert.getCareer())) {
-//                    career_id = i;
-//                    Log.e("careerID: ",career_id +"");
-//                    break;
-//                }
-//            }
-//            txtCareer.setText(expert.getCareer());
-//            loadSkillExist(expert.getIdExpert());
-//        }
+        txtEmail.setText(user.getIdUser());
+        txtFirstName.setText(user.getfName());
+        txtLastName.setText(user.getlName());
+        txtPass.setText(user.getPassword());
+        Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+
 
     }
 

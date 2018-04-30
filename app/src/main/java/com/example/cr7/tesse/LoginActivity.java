@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageView imgLogo;
 
     ProgressDialog mProgressDialog;
-    public static int isExpert=0;
+    public static int isExpert = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog.setMessage("Loading...");
         addEvents();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             ckbRemember.setChecked(false);
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -81,11 +83,19 @@ public class LoginActivity extends AppCompatActivity {
         SharePref.writeString(SharePref.PASS, txtPass.getText().toString().trim());
         SharePref.writeBoolean(SharePref.ISCHECK, ckbRemember.isChecked());
     }
+
     private void addEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clickLogin();
+            }
+        });
+        txtSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -117,17 +127,17 @@ public class LoginActivity extends AppCompatActivity {
                 if (users.size() != 0) {
                     hideDialog();
                     final User user = users.get(0);
-                    if(user.getIsExpert()==0){
-                        isExpert=0;
-                        Expert expert = new Expert(user.getIdUser(),user.getPassword(),user.getlName(),user.getfName(),"","",user.getAvatar(),0,10.847588,106.775818,"");
-                        Intent intent = new Intent(LoginActivity.this,ContainerActivity.class);
-                        intent.putExtra("expert",expert);
-                        startActivity(intent);
-                    }else if(user.getIsExpert()==1){
-                        isExpert=1;
-                        getExpert(user.getIdUser());
-                    }
+                    if (user.getIsExpert() == 0) {
+                        isExpert = 0;
 
+                    } else if (user.getIsExpert() == 1) {
+                        isExpert = 1;
+                        //getExpert(user.getIdUser());
+                    }
+                    //Expert expert = new Expert(user.getIdUser(),user.getPassword(),user.getlName(),user.getfName(),"","",user.getAvatar(),0,10.847588,106.775818,"");
+                    Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
 
                 } else {
                     hideDialog();
@@ -153,10 +163,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<List<Expert>> call, Response<List<Expert>> response) {
                 List<Expert> experts = response.body();
                 hideDialog();
-                final Expert expert = experts.get(0);
-                Intent intent = new Intent(LoginActivity.this, ContainerActivity.class);
-                intent.putExtra("expert", expert);
-                startActivity(intent);
             }
 
             @Override

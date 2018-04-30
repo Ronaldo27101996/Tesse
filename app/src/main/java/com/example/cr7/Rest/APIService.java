@@ -10,7 +10,10 @@ import org.json.JSONArray;
 
 import java.util.List;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -26,6 +29,16 @@ public interface APIService {
  @GET("users")
  Call<List<User>> getUser(@Query("id") String id, @Query("pass") String pass);
 
+ @POST("users")
+ @FormUrlEncoded
+ Call<User> addUser( @Field("IdUser") String IdUser,
+                     @Field("Password") String Password,
+                     @Field("FName") String Fname,
+                     @Field("LName") String LName,
+                     @Field("avatar") String avatar,
+                     @Field("isExpert") int isExpert
+ );
+
  @GET("expert/{id}")
  Call<List<Expert>> getExpert(@Path("id") String id);
 
@@ -40,5 +53,8 @@ public interface APIService {
 
  @GET("expert_skill/{id_expert}")
  Call<List<Skill>> getSkillByExpert(@Path("id_expert") String id);
+
+
+
 
 }

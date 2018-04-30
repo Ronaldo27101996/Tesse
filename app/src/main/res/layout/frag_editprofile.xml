@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
         android:textSize="20dp"
         android:textColor="#050505"
         android:text="PROFILE"/>
@@ -35,12 +36,13 @@
                 android:layout_width="250px"
                 android:layout_height="250px"
                 android:src="@drawable/avatar"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
                 app:civ_border_width="2dp"
                 app:civ_border_color="#FF000000"/>
             <LinearLayout
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
@@ -61,6 +63,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_margin="5dp"
                 android:layout_marginTop="10px"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -90,6 +93,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="30dp"
