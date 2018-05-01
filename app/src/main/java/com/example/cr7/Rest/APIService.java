@@ -41,7 +41,20 @@ public interface APIService {
 
  @GET("expert/{id}")
  Call<List<Expert>> getExpert(@Path("id") String id);
-
+ @POST("expert")
+ @FormUrlEncoded
+ Call<Expert> addExpert( @Field("IdExpert") String IdExpert,
+                     @Field("Password") String Password,
+                     @Field("LName") String LName,
+                     @Field("FName") String FName,
+                     @Field("career") String career,
+                     @Field("country") String country,
+                     @Field("image") String image,
+                     @Field("isOnline") int isOnline,
+                     @Field("lat") double lat,
+                     @Field("lon") double lon,
+                     @Field("sdt") String sdt
+ );
  @GET("career")
  Call<List<Career>> getListCareer();
 

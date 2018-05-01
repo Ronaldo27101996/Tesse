@@ -1,32 +1,31 @@
 package com.example.cr7.tesse;
 
-import android.annotation.SuppressLint;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.bumptech.glide.Glide;
 import com.example.cr7.Fragment.BecomeExpert_Fragment;
 import com.example.cr7.Fragment.EditInfo_Fragment;
-import com.example.cr7.Fragment.FindExpert_Fragment;
 import com.example.cr7.Fragment.LandingPageFragment;
-import com.example.cr7.Model.Expert;
 import com.example.cr7.Model.User;
 
 public class ContainerActivity extends AppCompatActivity {
     ImageView imgMenu;
     ImageView imgAvatar;
 
+    public static double LAT = 0;
+    public static double LON = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,13 +103,22 @@ public class ContainerActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack("landing_page");
         fragmentTransaction.commit();
     }
-
+    public void AppExit()
+    {
+        this.finish();
+        Intent intent= new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        System.exit(0);
+    }
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack("landing_page", 0);
         } else {
-            finish();
+            AppExit();
         }
     }
 }

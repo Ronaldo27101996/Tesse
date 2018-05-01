@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cr7.tesse">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -21,10 +23,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".DrawerActivity" />
-        <activity android:name=".ContainerActivity"></activity>
+        <activity android:name=".ContainerActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,13 +38,9 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAHywsaTgHHlKJOnkzU2BG3-hyS273_3O0" />
 
-        <activity android:name=".MyGoogleMap">
-
-        </activity>
-        <activity android:name=".SignUpActivity">
-
-
-        </activity>
+        <activity android:name=".MyGoogleMap"></activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".MapPickerActivity"></activity>
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@ import com.example.cr7.tesse.R;
 public class LandingPageFragment extends Fragment{
     EditText txtSearch;
     ImageView imgSearch;
-    Expert expert;
+    User user;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +41,9 @@ public class LandingPageFragment extends Fragment{
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(txtSearch.getText().equals("")){
+                if(txtSearch.getText().toString().trim().equals("")){
                     Bundle bundle =new Bundle();
-                    bundle.putSerializable("expert",expert);
+                    bundle.putSerializable("user",user);
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     FindExpert_Fragment findExpert_fragment = new FindExpert_Fragment();
@@ -60,10 +60,11 @@ public class LandingPageFragment extends Fragment{
     private void addControls(View view) {
         Bundle bundle =getArguments();
         if(bundle!=null){
-            expert = (Expert) bundle.getSerializable("expert");
+            user = (User) bundle.getSerializable("user");
         }
         txtSearch = view.findViewById(R.id.txtSearch);
         imgSearch =view.findViewById(R.id.imgSearch);
     }
+
 
 }

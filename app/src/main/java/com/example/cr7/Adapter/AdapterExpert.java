@@ -5,6 +5,8 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +41,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
     }
 
     @Override
-    public void onBindViewHolder(AdapterExpert.ExpertViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterExpert.ExpertViewHolder holder, final int position) {
         Expert expert = listExpert.get(position);
         holder.txtName.setText(expert.getfName()+" "+expert.getlName());
         holder.txtCareer.setText(expert.getCareer());
@@ -62,9 +64,35 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
                 dateAppointment();
             }
         });
+        holder.btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goCall(position);
+            }
+        });
+        holder.btnMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goMessage(position);
+            }
+        });
+
+
+    }
+    private void goMessage(int position) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms: " + listExpert.get(position).getSdt()));
+        context.startActivity(intent);
 
     }
 
+    private void goCall(int position) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + listExpert.get(position).getSdt()));
+            context.startActivity(intent);
+        } catch (Exception e) {
+            //TODO smth
+        }
+    }
     private void dateAppointment() {
         FragmentTransaction ft = ((Activity) context).getFragmentManager().beginTransaction();
         Fragment prev = (((Activity) context).getFragmentManager()).findFragmentByTag("dialog");
@@ -82,7 +110,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
     }
     public class ExpertViewHolder extends RecyclerView.ViewHolder {
         private TextView txtName,txtCareer,txtCountry,txtOnOff;
-        private ImageView imgAvatar,imgOnOff,imgDate;
+        private ImageView imgAvatar,imgOnOff,imgDate,btnMessage,btnCall;
         public ExpertViewHolder(View itemView) {
             super(itemView);
             txtName= itemView.findViewById(R.id.txtName);
@@ -92,6 +120,8 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
             imgOnOff = itemView.findViewById(R.id.imgOnOff);
             imgDate = itemView.findViewById(R.id.btnDate);
+            btnCall = itemView.findViewById(R.id.btnCall);
+            btnMessage = itemView.findViewById(R.id.btnChat);
 
         }
     }

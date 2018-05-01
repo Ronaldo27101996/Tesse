@@ -1,9 +1,9 @@
 package com.example.cr7.Fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +30,7 @@ import com.example.cr7.Rest.APIService;
 import com.example.cr7.Rest.RetrofitClient;
 import com.example.cr7.tesse.ContainerActivity;
 import com.example.cr7.tesse.LoginActivity;
+import com.example.cr7.tesse.MapPickerActivity;
 import com.example.cr7.tesse.R;
 
 import java.util.ArrayList;
@@ -46,8 +46,9 @@ import retrofit2.Response;
 
 public class BecomeExpert_Fragment extends Fragment {
     User user;
-    ImageView imgAva;
-    EditText txtFirstName, txtLastName, txtEmail, txtPass, txtSDT, txtCountry, txtAddress;
+    ImageView imgAva, imgExactlyLocation;
+    TextView txtExactlyLocation;
+    EditText txtFirstName, txtLastName, txtEmail, txtPass, txtSDT, txtCountry;
     AutoCompleteTextView txtCareer;
     MultiAutoCompleteTextView txtSkill;
     String strAvatar;
@@ -77,7 +78,8 @@ public class BecomeExpert_Fragment extends Fragment {
             user = (User) bundle.getSerializable("user");
         }
 
-
+        imgExactlyLocation = view.findViewById(R.id.imgExactlyLocation);
+        txtExactlyLocation = view.findViewById(R.id.txtExactlyLocation);
         btnSave = view.findViewById(R.id.btnSave);
         imgAva = view.findViewById(R.id.imgAvatar);
         txtEmail = view.findViewById(R.id.txtEmail);
@@ -85,7 +87,7 @@ public class BecomeExpert_Fragment extends Fragment {
         txtFirstName = view.findViewById(R.id.txtFName);
         txtLastName = view.findViewById(R.id.txtLName);
         txtCareer = view.findViewById(R.id.txtCareer);
-        txtAddress = view.findViewById(R.id.txtAddress);
+
         txtCountry = view.findViewById(R.id.txtCountry);
         txtSkill = view.findViewById(R.id.txtSkill);
         txtSDT = view.findViewById(R.id.txtSdt);
@@ -153,11 +155,11 @@ public class BecomeExpert_Fragment extends Fragment {
                 for (int j : arrSkilltoSave) {
                     if (j == skill_id) {
 //                         just show old list
-                                String strSkillShow = "";
-                                for (String str : arrSkilltoShow) {
-                                    strSkillShow += str + ", ";
-                                }
-                                txtSkill.setText(strSkillShow);
+                        String strSkillShow = "";
+                        for (String str : arrSkilltoShow) {
+                            strSkillShow += str + ", ";
+                        }
+                        txtSkill.setText(strSkillShow);
                         return;
                     }
                 }
@@ -253,12 +255,49 @@ public class BecomeExpert_Fragment extends Fragment {
 
                 String image = strAvatar;
                 int isOnline = 1;
-                double lat = 10.847588;
-                double lon = 106.775818;
+                double lat = ContainerActivity.LAT;
+                double lon = ContainerActivity.LON;
                 //Expert expert= new Expert(idExpert,password,lName,fName,sdt,career,country,image,isOnline,lat,lon);
+                final APIService apiService = RetrofitClient.getClient(RetrofitClient.BASE_URL).create(APIService.class);
+                Call<Expert> call = apiService.addExpert(idExpert,password,lName,fName,career,country,image,0,lat,lon,sdt);
+                Log.e("URL", call.request().url() + " ");
+                call.enqueue(new Callback<Expert>() {
+                    @Override
+                    public void onResponse(Call<Expert> call, Response<Expert> response) {
+                        if(response.body()!=null){
+                            Expert ex = response.body();
+                            LoginActivity.isExpert=1;
+                            Toast.makeText(getActivity(), ""+ex.getIdExpert()+" is expert now", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Expert> call, Throwable t) {
+                        Log.e("onFailure: ", "something fail: " + t.getMessage());
+                        Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
+
+        imgExactlyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickMap();
+            }
+        });
+        txtExactlyLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickMap();
+            }
+        });
+    }
+
+    private void pickMap() {
+        Intent intent = new Intent(getActivity(), MapPickerActivity.class);
+        startActivity(intent);
     }
 
 

@@ -39,7 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void addControls() {
         txtTitle = findViewById(R.id.txtTitle);
+        txtTitle.setText("Sign Up");
         btnSave = findViewById(R.id.btnSave);
+        btnSave.setText("Done");
         imgAva = findViewById(R.id.imgAvatar);
         txtEmail = findViewById(R.id.txtEmail);
         txtPass = findViewById(R.id.txtPass);
@@ -130,15 +132,17 @@ public class SignUpActivity extends AppCompatActivity {
                 User user = response.body();
                 if (user != null) {
                     Toast.makeText(SignUpActivity.this, "Success!!!", Toast.LENGTH_SHORT).show();
+                    LoginActivity.isExpert=0;
                     Intent intent = new Intent(SignUpActivity.this, ContainerActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
                 }
-            }
+        }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("onFailure: ", "something fail mail");
+                Log.e("onFailure: ", "something fail ");
+                Toast.makeText(SignUpActivity.this, "Check your connection or server", Toast.LENGTH_SHORT).show();
             }
 
         });

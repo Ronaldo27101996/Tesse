@@ -115,7 +115,6 @@ public class FindExpert_Fragment extends Fragment {
     }
 
     public void hideDialog() {
-
         if (mProgressDialog != null && mProgressDialog.isShowing())
             mProgressDialog.dismiss();
     }
