@@ -2,21 +2,23 @@ package com.example.cr7.tesse;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cr7.Model.Expert;
 import com.example.cr7.Model.use_map.Directions;
 import com.example.cr7.Rest.APIService;
 import com.example.cr7.Rest.RetrofitClient;
+import com.example.cr7.Rest.RetrofitClientMap;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,11 +39,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.cr7.Rest.RetrofitClientMap.BASE_MAP;
 
-
-public class MyGoogleMap extends AppCompatActivity {
-    //Khai báo đối tượng Google Map
+public class MapDirectionActivity extends AppCompatActivity {
+    double Expert_lat,Expert_lon;
     GoogleMap mMap;
     public static int PERMISSION_ALL = 1;
     ArrayList<LatLng> arrPosition = new ArrayList<>();
@@ -49,43 +49,30 @@ public class MyGoogleMap extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     LatLng mylocation;
     TextView txtDistance, txtDuration;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_google_map);
+        setContentView(R.layout.activity_map_direction);
         getSupportActionBar().hide();
         addControls();
         String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if (!hasPermissions(MyGoogleMap.this, PERMISSIONS)) {
+        if (!hasPermissions(MapDirectionActivity.this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
         initViews();
     }
-
     private void addControls() {
         txtDistance = findViewById(R.id.txtDistance);
         txtDuration = findViewById(R.id.txtDuration);
+        Intent intent= getIntent();
+         Expert_lat = intent.getDoubleExtra("lat",0);
+        Log.e( "Expert_lat", ""+Expert_lat);
+        Expert_lon = intent.getDoubleExtra("lon",0);
+        Log.e( "Expert_lon", ""+Expert_lon);
     }
-
-    private void addEvent() {
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                arrPosition.add(latLng);
-                mMap.addMarker(markerOptions);
-                Log.e("Location ", latLng.latitude + " " + latLng.longitude);
-
-            }
-        });
-    }
-
     private void initViews() {
         SupportMapFragment supportMapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id
@@ -100,7 +87,7 @@ public class MyGoogleMap extends AppCompatActivity {
                     public void onMapLoaded() {
                         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                         mMap.getUiSettings().setZoomControlsEnabled(true);
-                        if (ActivityCompat.checkSelfPermission(MyGoogleMap.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MyGoogleMap.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(MapDirectionActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapDirectionActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
                             //    ActivityCompat#requestPermissions
                             // here to request the missing permissions, and then overriding
@@ -112,36 +99,35 @@ public class MyGoogleMap extends AppCompatActivity {
                         }
                         mMap.setMyLocationEnabled(true);
                         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MyGoogleMap.this);
+                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MapDirectionActivity.this);
                         mFusedLocationClient.getLastLocation()
-                                .addOnSuccessListener(MyGoogleMap.this, new OnSuccessListener<Location>() {
+                                .addOnSuccessListener(MapDirectionActivity.this, new OnSuccessListener<Location>() {
                                     @Override
                                     public void onSuccess(Location location) {
                                         // Got last known location. In some rare situations this can be null.
                                         if (location != null) {
                                             // Logic to handle location object
                                             mylocation = new LatLng(location.getLatitude(), location.getLongitude());
-                                            Log.e("Last Know location: ", location.getLatitude() + " " + location.getLongitude());
-
                                         } else {
                                             mylocation = new LatLng(10.848501, 106.786544);
-
                                         }
-                                        loadData();
+                                        mMap.addMarker(new MarkerOptions()
+                                                .position(mylocation)
+                                                .title("Marker in MyLocation")
+                                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.myloca))
+                                        );
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 15));
+                                        Log.e("Last Know location: ", location.getLatitude() + " " + location.getLongitude());
+                                        ContainerActivity.LAT = mylocation.latitude;
+                                        ContainerActivity.LON = mylocation.longitude;
+                                        loadData(Expert_lat,Expert_lon);
                                     }
                                 });
 
                     }
                 });
 
-                LatLng ngaTuThuDuc = new LatLng(10.852352, 106.773407);
-                //Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                mMap.addMarker(new MarkerOptions()
-                        .position(ngaTuThuDuc)
-                        .title("Marker in ngaTuThuDuc")
-                );
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ngaTuThuDuc, 15));
-                if (ActivityCompat.checkSelfPermission(MyGoogleMap.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MyGoogleMap.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(MapDirectionActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapDirectionActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
@@ -155,7 +141,7 @@ public class MyGoogleMap extends AppCompatActivity {
                 mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                     @Override
                     public boolean onMyLocationButtonClick() {
-                        Toast.makeText(MyGoogleMap.this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MapDirectionActivity.this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
                         // Return false so that we don't consume the event and the default behavior still occurs
                         // (the camera animates to the user's current position).
                         return true;
@@ -163,15 +149,13 @@ public class MyGoogleMap extends AppCompatActivity {
                     }
                 });
 
-                addEvent();
 
             }
         });
     }
-
-    private void loadData() {
-        final APIService apiService = RetrofitClient.getClient(BASE_MAP).create(APIService.class);
-        Call<Directions> callDirections = apiService.getDistanceDuration("metric", mylocation.latitude + "," + mylocation.longitude, "97 Man Thiện, Hiệp Phú, Quận 9, Hồ Chí Minh, Việt Nam", "driving");
+    private void loadData(double expert_lat,double expert_lon) {
+         APIService apiService2 = RetrofitClientMap.getClient(RetrofitClientMap.BASE_MAP).create(APIService.class);
+        Call<Directions> callDirections = apiService2.getDistanceDuration("metric", mylocation.latitude + "," + mylocation.longitude, expert_lat + "," + expert_lon, "driving");
 
         Log.e("URL", callDirections.request().url() + " ");
         callDirections.enqueue(new Callback<Directions>() {
@@ -205,12 +189,12 @@ public class MyGoogleMap extends AppCompatActivity {
                                 .position(endPoint)
                                 .title("Marker in end point")
                         );
-                        LatLng start = new LatLng(list.get(0).latitude, list.get(0).longitude);
-                        mMap.addMarker(new MarkerOptions()
-                                .position(start)
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                                .title("Marker in start")
-                        );
+//                        LatLng start = new LatLng(list.get(0).latitude, list.get(0).longitude);
+//                        mMap.addMarker(new MarkerOptions()
+//                                .position(start)
+//                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+//                                .title("Marker in start")
+//                        );
 
                     }
                 } catch (Exception e) {
@@ -222,11 +206,10 @@ public class MyGoogleMap extends AppCompatActivity {
             @Override
             public void onFailure(Call<Directions> call, Throwable t) {
                 Log.e("onFailure: ", "something fail ");
-                Toast.makeText(MyGoogleMap.this, t.getMessage() + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapDirectionActivity.this, t.getMessage() + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
     private List<LatLng> decodePoly(String encoded) {
         List<LatLng> poly = new ArrayList<LatLng>();
         int index = 0, len = encoded.length();
@@ -259,7 +242,6 @@ public class MyGoogleMap extends AppCompatActivity {
 
         return poly;
     }
-
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && context != null && permissions != null) {
@@ -272,5 +254,4 @@ public class MyGoogleMap extends AppCompatActivity {
         }
         return true;
     }
-
 }

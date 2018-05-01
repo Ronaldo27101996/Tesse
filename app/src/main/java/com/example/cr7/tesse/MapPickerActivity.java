@@ -161,8 +161,9 @@ public class MapPickerActivity extends AppCompatActivity {
                 mMap.addMarker(markerOptions);
                 Log.e("Location ", latLng.latitude + " " + latLng.longitude);
                 Toast.makeText(MapPickerActivity.this, "Your Position: "+ latLng.latitude + " " + latLng.longitude, Toast.LENGTH_SHORT).show();
-                ContainerActivity.LAT = mylocation.latitude;
-                ContainerActivity.LON = mylocation.longitude;
+                ContainerActivity.LAT = latLng.latitude;
+                ContainerActivity.LON = latLng.longitude;
+
             }
         });
     }

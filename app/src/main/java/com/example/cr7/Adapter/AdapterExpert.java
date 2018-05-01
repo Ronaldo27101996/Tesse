@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.cr7.Fragment.Appointment_Fragment;
 import com.example.cr7.Model.Expert;
+import com.example.cr7.tesse.MapDirectionActivity;
 import com.example.cr7.tesse.R;
 
 import java.util.List;
@@ -76,9 +78,22 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
                 goMessage(position);
             }
         });
-
+        holder.btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goDirection(position);
+            }
+        });
 
     }
+
+    private void goDirection(int position) {
+        Intent intent =new Intent(context,MapDirectionActivity.class);
+        intent.putExtra("lat",listExpert.get(position).getLat());
+        intent.putExtra("lon",listExpert.get(position).getLon());
+        context.startActivity(intent);
+    }
+
     private void goMessage(int position) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms: " + listExpert.get(position).getSdt()));
         context.startActivity(intent);
@@ -110,7 +125,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
     }
     public class ExpertViewHolder extends RecyclerView.ViewHolder {
         private TextView txtName,txtCareer,txtCountry,txtOnOff;
-        private ImageView imgAvatar,imgOnOff,imgDate,btnMessage,btnCall;
+        private ImageView imgAvatar,imgOnOff,imgDate,btnMessage,btnCall,btnMap;
         public ExpertViewHolder(View itemView) {
             super(itemView);
             txtName= itemView.findViewById(R.id.txtName);
@@ -122,7 +137,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
             imgDate = itemView.findViewById(R.id.btnDate);
             btnCall = itemView.findViewById(R.id.btnCall);
             btnMessage = itemView.findViewById(R.id.btnChat);
-
+            btnMap =itemView.findViewById(R.id.btnMap);
         }
     }
 }

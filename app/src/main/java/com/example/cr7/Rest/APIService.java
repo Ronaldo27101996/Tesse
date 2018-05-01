@@ -67,6 +67,11 @@ public interface APIService {
  @GET("expert_skill/{id_expert}")
  Call<List<Skill>> getSkillByExpert(@Path("id_expert") String id);
 
+ @POST("expert_skill")
+ @FormUrlEncoded
+ Call<Integer> addExpert_Skill( @Field("expert_id") String id,
+                     @Field("skill_id") int skill
+ );
 
 
 

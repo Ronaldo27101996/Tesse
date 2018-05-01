@@ -38,9 +38,10 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAHywsaTgHHlKJOnkzU2BG3-hyS273_3O0" />
 
-        <activity android:name=".MyGoogleMap"></activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".MapPickerActivity"></activity>
+        <activity android:name=".MyGoogleMap" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".MapPickerActivity" />
+        <activity android:name=".MapDirectionActivity"></activity>
     </application>
 
 </manifest>
