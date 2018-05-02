@@ -62,7 +62,7 @@ public class FindExpert_Fragment extends Fragment {
     }
 
     private void addEvents() {
-        
+
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

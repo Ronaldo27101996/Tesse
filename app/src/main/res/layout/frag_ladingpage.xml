@@ -9,14 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="520dp"
-        android:background="@drawable/tesse_landingpage1"
+        android:background="@drawable/landingpage_cover"
         android:gravity="center"
         >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="520dp"
         android:gravity="center"
-        android:background="#a6706868"
         >
         <LinearLayout
             android:layout_width="match_parent"
