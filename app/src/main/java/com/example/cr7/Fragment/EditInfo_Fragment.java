@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.ImageHeaderParser;
 import com.example.cr7.Model.User;
 import com.example.cr7.Rest.APIService;
 import com.example.cr7.Rest.RetrofitClient;
@@ -32,38 +33,45 @@ import retrofit2.Response;
 
 /**
  * Created by CR7 on 4/11/2018.
-        */
+ */
 
 public class EditInfo_Fragment extends Fragment {
     ImageView imgAva;
-    EditText txtFirstName,txtLastName,txtPass,txtEmail;
+    EditText txtFirstName, txtLastName, txtPass, txtEmail;
     User user;
     Button btnSave;
     String strAvatar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_editprofile,container,false);
+        View view = inflater.inflate(R.layout.frag_editprofile, container, false);
         addControls(view);
         addEvents();
         return view;
     }
 
     private void addControls(View view) {
-        imgAva= view.findViewById(R.id.imgAvatar);
-        txtLastName=view.findViewById(R.id.txtLName);
-        txtFirstName =view.findViewById(R.id.txtFName);
-        txtPass=view.findViewById(R.id.txtPass);
-        btnSave= view.findViewById(R.id.btnSave);
+        imgAva = view.findViewById(R.id.imgAvatar);
+        txtLastName = view.findViewById(R.id.txtLName);
+        txtFirstName = view.findViewById(R.id.txtFName);
+        txtPass = view.findViewById(R.id.txtPass);
+        btnSave = view.findViewById(R.id.btnSave);
         txtEmail = view.findViewById(R.id.txtEmail);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            user = (User) bundle.getSerializable("user");
-        }
-        Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            user = (User) bundle.getSerializable("user");
+//        }
+//        if(user.getAvatar()!=null){
+//            Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+//        }
+        user =LoginActivity.user;
         txtPass.setText(user.getPassword());
         txtFirstName.setText(user.getfName());
         txtLastName.setText(user.getlName());
+        if(user.getAvatar()!=null){
+            Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+    }
         txtEmail.setText(user.getIdUser());
         txtEmail.setEnabled(false);
         strAvatar = user.getAvatar();
@@ -109,7 +117,9 @@ public class EditInfo_Fragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            updateInfoUser();
+                ImageView imageView = getActivity().findViewById(R.id.imgAvatar);
+                Glide.with(getActivity()).load(strAvatar).into(imageView);
+                updateInfoUser();
 
             }
         });
@@ -126,10 +136,21 @@ public class EditInfo_Fragment extends Fragment {
         call.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if(response.body()!=0){
-                   updateInfoExpert();
+                if (response.body() != 0) {
+                    LoginActivity.user.setPassword(txtPass.getText().toString().trim());
+                    LoginActivity.user.setfName(txtFirstName.getText().toString().trim());
+                    LoginActivity.user.setlName(txtLastName.getText().toString().trim());
+                    LoginActivity.user.setAvatar(strAvatar);
+                    if (LoginActivity.isExpert == 1) {
+                        updateInfoExpert();
+                    } else {
+                        Toast.makeText(getActivity(), "Success!!!", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().popBackStackImmediate();
+                    }
+
                 }
             }
+
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e("onFailure: ", "something fail: " + t.getMessage());
@@ -137,7 +158,8 @@ public class EditInfo_Fragment extends Fragment {
             }
         });
     }
-    void updateInfoExpert(){
+
+    void updateInfoExpert() {
         final APIService apiService = RetrofitClient.getClient(RetrofitClient.BASE_URL).create(APIService.class);
         Call<Integer> call = apiService.updateExpertInfo(txtEmail.getText().toString().trim(),
                 txtPass.getText().toString().trim(),
@@ -148,8 +170,8 @@ public class EditInfo_Fragment extends Fragment {
         call.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if(response.body()!=0){
-                    Log.e("update Success",""+response.body() );
+                if (response.body() != 0) {
+                    Log.e("update Success", "" + response.body());
                     Toast.makeText(getActivity(), "Update Successful!!!", Toast.LENGTH_SHORT).show();
                     getFragmentManager().popBackStackImmediate();
                 }

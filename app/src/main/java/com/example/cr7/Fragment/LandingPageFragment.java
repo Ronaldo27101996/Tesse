@@ -44,6 +44,7 @@ public class LandingPageFragment extends Fragment{
                 if(txtSearch.getText().toString().trim().equals("")){
                     Bundle bundle =new Bundle();
                     bundle.putSerializable("user",user);
+                    bundle.putString("keyword","all");
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     FindExpert_Fragment findExpert_fragment = new FindExpert_Fragment();
@@ -51,6 +52,18 @@ public class LandingPageFragment extends Fragment{
                     fragmentTransaction.replace(R.id.layout_container,findExpert_fragment,"find_expert");
                     fragmentTransaction.addToBackStack("find_expert");
                     fragmentTransaction.commit();
+                } else {
+                        Bundle bundle =new Bundle();
+                        bundle.putSerializable("user",user);
+                        bundle.putString("keyword",txtSearch.getText().toString());
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        FindExpert_Fragment findExpert_fragment = new FindExpert_Fragment();
+                        findExpert_fragment.setArguments(bundle);
+                        fragmentTransaction.replace(R.id.layout_container,findExpert_fragment,"find_expert");
+                        fragmentTransaction.addToBackStack("find_expert");
+                        fragmentTransaction.commit();
+
                 }
 
             }

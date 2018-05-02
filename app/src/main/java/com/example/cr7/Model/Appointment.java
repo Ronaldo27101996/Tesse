@@ -3,7 +3,9 @@ package com.example.cr7.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
 
     @SerializedName("id")
     @Expose

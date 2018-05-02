@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog;
     public static int isExpert = 0;
+    public static User user = null;
     public static String USER_ID = "";
 
     @Override
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 List<User> users = response.body();
                 if (users.size() != 0) {
                     hideDialog();
-                    final User user = users.get(0);
+                     user = users.get(0);
                     USER_ID = user.getIdUser();
                     if (user.getIsExpert() == 0) {
                         isExpert = 0;
@@ -156,26 +157,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void getExpert(String idUser) {
-        final APIService apiService = RetrofitClient.getClient(RetrofitClient.BASE_URL).create(APIService.class);
-        Call<List<Expert>> call = apiService.getExpert(idUser);
-        Log.e("URL", call.request().url() + " ");
-        call.enqueue(new Callback<List<Expert>>() {
-            @Override
-            public void onResponse(Call<List<Expert>> call, Response<List<Expert>> response) {
-                List<Expert> experts = response.body();
-                hideDialog();
-            }
-
-            @Override
-            public void onFailure(Call<List<Expert>> call, Throwable t) {
-                hideDialog();
-                Log.e("onFailure: ", "something fail: " + t.getMessage());
-                Toast.makeText(LoginActivity.this, t.getMessage() + "", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
     public void showDialog() {
 

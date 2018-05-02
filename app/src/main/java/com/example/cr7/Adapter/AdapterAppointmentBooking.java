@@ -45,7 +45,7 @@ public class AdapterAppointmentBooking extends RecyclerView.Adapter<AdapterAppoi
                 holder.imgAccept.setImageResource(R.drawable.accept_icon);
                 holder.txtAccept.setText("Accepted ");
                 holder.txtAccept.setTextColor(Color.GREEN);
-            }else if(appointment.getIsAccepted()==1){
+            }else if(appointment.getIsAccepted()==0){
                 holder.imgAccept.setImageResource(R.drawable.deny_icon);
                 holder.txtAccept.setText("Deny ");
                 holder.txtAccept.setTextColor(Color.RED);

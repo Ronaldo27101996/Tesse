@@ -109,4 +109,10 @@ public interface APIService {
 
  @GET("appointmentexpert/{id_expert}")
  Call<List<Appointment>> getAppointmentOfExpert(@Path("id_expert") String id);
+ @PUT("appointment/commit/{id}")
+ @FormUrlEncoded
+ Call<Integer> updateCommitAppointment( @Path("id") int id,
+                                       @Field("isAccepted") int isAccepted);
+ @GET("search/{keyword}")
+ Call<List<Expert>> getExpertbyKeyword(@Path("keyword") String keyword);
 }

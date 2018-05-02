@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.cr7.Fragment.Appointment_Fragment;
+import com.example.cr7.Fragment.Add_Appointment_Fragment;
 import com.example.cr7.Model.Expert;
-import com.example.cr7.tesse.LoginActivity;
 import com.example.cr7.tesse.MapDirectionActivity;
 import com.example.cr7.tesse.R;
 
@@ -119,7 +117,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
             ft.remove(prev);
         }
         ft.addToBackStack(null);
-        DialogFragment dialogFragment = new Appointment_Fragment();
+        DialogFragment dialogFragment = new Add_Appointment_Fragment();
         dialogFragment.setArguments(bundle);
         dialogFragment.show(ft, "dialogAppointment");
     }

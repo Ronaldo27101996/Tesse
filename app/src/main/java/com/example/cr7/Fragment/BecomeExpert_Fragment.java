@@ -73,10 +73,7 @@ public class BecomeExpert_Fragment extends Fragment {
     }
 
     private void addControls(View view) {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            user = (User) bundle.getSerializable("user");
-        }
+        user= LoginActivity.user;
 
         imgExactlyLocation = view.findViewById(R.id.imgExactlyLocation);
         txtExactlyLocation = view.findViewById(R.id.txtExactlyLocation);
@@ -98,7 +95,10 @@ public class BecomeExpert_Fragment extends Fragment {
         txtFirstName.setText(user.getfName());
         txtLastName.setText(user.getlName());
         txtPass.setText(user.getPassword());
-        Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+        if(user.getAvatar()!=null){
+            Glide.with(getActivity()).load(user.getAvatar()).into(imgAva);
+        }
+
         strAvatar=user.getAvatar();
 
 

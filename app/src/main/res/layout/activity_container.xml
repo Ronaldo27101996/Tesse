@@ -51,7 +51,7 @@
                     android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:id="@+id/listAppointmentExpert"
-                    android:src="@drawable/icon_notification"/>
+                    android:src="@drawable/icon_list"/>
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/imgAvatar"
@@ -61,7 +61,7 @@
                     android:layout_height="35dp"
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ava_emma"/>
+                    android:src="@drawable/avatar_circle"/>
 
 
             </LinearLayout>

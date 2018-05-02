@@ -131,6 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 User user = response.body();
                 if (user != null) {
+                    LoginActivity.user=user;
                     Toast.makeText(SignUpActivity.this, "Success!!!", Toast.LENGTH_SHORT).show();
                     LoginActivity.isExpert=0;
                     LoginActivity.USER_ID= user.getIdUser();

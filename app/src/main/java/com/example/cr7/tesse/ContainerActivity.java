@@ -40,12 +40,17 @@ public class ContainerActivity extends AppCompatActivity {
         imgListAppointmentExpert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Manager_Appointment_Expert_Fragment managerAppointmentFragment = new Manager_Appointment_Expert_Fragment();
-                fragmentTransaction.replace(R.id.layout_container, managerAppointmentFragment, "managerAppointmentExpert");
-                fragmentTransaction.addToBackStack("managerAppointmentExpert");
-                fragmentTransaction.commit();
+                if(LoginActivity.isExpert==0){
+                    Toast.makeText(ContainerActivity.this, "You are not an Expert.", Toast.LENGTH_SHORT).show();
+                }else {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Manager_Appointment_Expert_Fragment managerAppointmentFragment = new Manager_Appointment_Expert_Fragment();
+                    fragmentTransaction.replace(R.id.layout_container, managerAppointmentFragment, "managerAppointmentExpert");
+                    fragmentTransaction.addToBackStack("managerAppointmentExpert");
+                    fragmentTransaction.commit();
+                }
+
             }
         });
         imgAvatar.setOnClickListener(new View.OnClickListener() {
@@ -113,9 +118,12 @@ public class ContainerActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra("user");
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
-        Glide.with(ContainerActivity.this)
-                .load(user.getAvatar())
-                .into(imgAvatar);
+        if(user.getAvatar()!=null){
+            Glide.with(ContainerActivity.this)
+                    .load(user.getAvatar())
+                    .into(imgAvatar);
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         LandingPageFragment landingPageFragment = new LandingPageFragment();
