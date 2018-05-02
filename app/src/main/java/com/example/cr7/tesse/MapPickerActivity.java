@@ -33,7 +33,6 @@ public class MapPickerActivity extends AppCompatActivity {
     GoogleMap mMap;
     public static int PERMISSION_ALL = 1;
     ArrayList<LatLng> arrPosition = new ArrayList<>();
-    Polyline line;
     private FusedLocationProviderClient mFusedLocationClient;
     LatLng mylocation;
     @Override
@@ -160,7 +159,6 @@ public class MapPickerActivity extends AppCompatActivity {
                 arrPosition.add(latLng);
                 mMap.addMarker(markerOptions);
                 Log.e("Location ", latLng.latitude + " " + latLng.longitude);
-                Toast.makeText(MapPickerActivity.this, "Your Position: "+ latLng.latitude + " " + latLng.longitude, Toast.LENGTH_SHORT).show();
                 ContainerActivity.LAT = latLng.latitude;
                 ContainerActivity.LON = latLng.longitude;
 
@@ -176,8 +174,8 @@ public class MapPickerActivity extends AppCompatActivity {
         } else {
             builder = new AlertDialog.Builder(MapPickerActivity.this);
         }
-        builder.setTitle("Your exactly location.")
-                .setMessage("Are you sure done set it as your location? \n "+ ContainerActivity.LAT +","+ContainerActivity.LON )
+        builder.setTitle("Exactly location.")
+                .setMessage("Are you sure choose this location? \n "+ ContainerActivity.LAT +","+ContainerActivity.LON )
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

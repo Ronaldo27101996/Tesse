@@ -50,7 +50,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="10dp"
-                    android:id="@+id/imgNotification"
+                    android:id="@+id/listAppointmentExpert"
                     android:src="@drawable/icon_notification"/>
                 <de.hdodenhof.circleimageview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"

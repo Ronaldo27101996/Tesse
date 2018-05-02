@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.cr7.tesse.R;
@@ -29,8 +31,10 @@ public class MDatePicker extends DialogFragment
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        //Toast.makeText(getActivity(), day + "/" + month + 1 + "/" + year, Toast.LENGTH_SHORT).show();
-        //TextView txtMain = getActivity().findViewById(R.id.txtBirthday);
-        //txtMain.setText( day + "/" + month + 1 + "/" + year);
+        Toast.makeText(getActivity(), day + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
+
+
+        TextView txtMain = getFragmentManager().findFragmentByTag("dialogAppointment").getView().findViewById(R.id.txtDate);
+        txtMain.setText( day + "/" + (month + 1) + "/" + year);
     }
 }

@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.cr7.Fragment.Appointment_Fragment;
 import com.example.cr7.Model.Expert;
+import com.example.cr7.tesse.LoginActivity;
 import com.example.cr7.tesse.MapDirectionActivity;
 import com.example.cr7.tesse.R;
 
@@ -63,7 +65,7 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
         holder.imgDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateAppointment();
+                dateAppointment(position);
             }
         });
         holder.btnCall.setOnClickListener(new View.OnClickListener() {
@@ -108,15 +110,18 @@ public class AdapterExpert extends RecyclerView.Adapter<AdapterExpert.ExpertView
             //TODO smth
         }
     }
-    private void dateAppointment() {
+    private void dateAppointment(int pos) {
+        Bundle bundle = new Bundle();
+        bundle.putString("expert_id", listExpert.get(pos).getIdExpert());
         FragmentTransaction ft = ((Activity) context).getFragmentManager().beginTransaction();
-        Fragment prev = (((Activity) context).getFragmentManager()).findFragmentByTag("dialog");
+        Fragment prev = (((Activity) context).getFragmentManager()).findFragmentByTag("dialogAppointment");
         if (prev != null) {
             ft.remove(prev);
         }
         ft.addToBackStack(null);
         DialogFragment dialogFragment = new Appointment_Fragment();
-        dialogFragment.show(ft, "dialog");
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(ft, "dialogAppointment");
     }
 
     @Override

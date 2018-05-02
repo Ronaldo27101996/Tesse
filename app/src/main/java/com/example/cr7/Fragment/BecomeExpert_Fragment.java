@@ -308,7 +308,8 @@ public class BecomeExpert_Fragment extends Fragment {
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
                     Log.e("Test Expert_ Skill", response.body()+"" ); // 1 is success
                     if(finalI ==arrSkilltoSave.size()-1){
-                        getFragmentManager().popBackStackImmediate();
+                        updateUserBecomeExpert();
+                        //getFragmentManager().popBackStackImmediate();
                     }
                 }
 
@@ -320,6 +321,28 @@ public class BecomeExpert_Fragment extends Fragment {
             });
         }
 
+    }
+
+    private void updateUserBecomeExpert() {
+        final APIService apiService = RetrofitClient.getClient(RetrofitClient.BASE_URL).create(APIService.class);
+        Call<Integer> call = apiService.updateUserbecomeExpert(txtEmail.getText().toString().trim(),LoginActivity.isExpert);
+        Log.e("URL", call.request().url() + " ");
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(response.body()!=0){
+                    Log.e("update Success",""+response.body() );
+                    getFragmentManager().popBackStackImmediate();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Log.e("onFailure: ", "something fail: " + t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void pickMap() {

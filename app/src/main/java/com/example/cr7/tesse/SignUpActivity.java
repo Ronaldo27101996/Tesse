@@ -133,6 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (user != null) {
                     Toast.makeText(SignUpActivity.this, "Success!!!", Toast.LENGTH_SHORT).show();
                     LoginActivity.isExpert=0;
+                    LoginActivity.USER_ID= user.getIdUser();
                     Intent intent = new Intent(SignUpActivity.this, ContainerActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);

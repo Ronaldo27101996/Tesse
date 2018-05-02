@@ -83,10 +83,10 @@ public class FindExpert_Fragment extends Fragment {
 //        listExpert.add(new Expert("Naruto", "Ninja", "Japan", "https://pbs.twimg.com/media/DX1Rd1xUMAABmVm.jpg", false, 10.847588, 106.775818));
 
         final APIService apiService = RetrofitClient.getClient(RetrofitClient.BASE_URL).create(APIService.class);
-        Call<List<Expert>> callMail = apiService.getListExpert();
+        Call<List<Expert>> call = apiService.getListExpert();
         showDialog();
-        Log.e("URL", callMail.request().url() + " ");
-        callMail.enqueue(new Callback<List<Expert>>() {
+        Log.e("URL", call.request().url() + " ");
+        call.enqueue(new Callback<List<Expert>>() {
             @Override
             public void onResponse(Call<List<Expert>> call, Response<List<Expert>> response) {
                 hideDialog();

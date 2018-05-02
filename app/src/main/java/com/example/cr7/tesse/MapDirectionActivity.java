@@ -200,8 +200,8 @@ public class MapDirectionActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
                     e.printStackTrace();
-                }
             }
+        }
 
             @Override
             public void onFailure(Call<Directions> call, Throwable t) {

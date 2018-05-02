@@ -12,20 +12,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.example.cr7.Fragment.Manager_Appointment_Booking_Fragment;
 import com.bumptech.glide.Glide;
 import com.example.cr7.Fragment.BecomeExpert_Fragment;
 import com.example.cr7.Fragment.EditInfo_Fragment;
 import com.example.cr7.Fragment.LandingPageFragment;
+import com.example.cr7.Fragment.Manager_Appointment_Expert_Fragment;
 import com.example.cr7.Model.User;
 
 public class ContainerActivity extends AppCompatActivity {
-    ImageView imgMenu;
+    ImageView imgListAppointmentExpert;
     ImageView imgAvatar;
 
     public static double LAT = 0;
     public static double LON = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,17 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-
+        imgListAppointmentExpert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Manager_Appointment_Expert_Fragment managerAppointmentFragment = new Manager_Appointment_Expert_Fragment();
+                fragmentTransaction.replace(R.id.layout_container, managerAppointmentFragment, "managerAppointmentExpert");
+                fragmentTransaction.addToBackStack("managerAppointmentExpert");
+                fragmentTransaction.commit();
+            }
+        });
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,12 +60,14 @@ public class ContainerActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         //Toast.makeText(ContainerActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
                         if (item.getItemId() == R.id.Profile) {
+                            User user = (User) getIntent().getSerializableExtra("user");
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("user", user);
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             EditInfo_Fragment editInfo_fragment = new EditInfo_Fragment();
-
+                            editInfo_fragment.setArguments(bundle);
                             fragmentTransaction.replace(R.id.layout_container, editInfo_fragment, "profile");
-
                             fragmentTransaction.addToBackStack("profile");
                             fragmentTransaction.commit();
 
@@ -77,6 +90,14 @@ public class ContainerActivity extends AppCompatActivity {
                                 fragmentTransaction.addToBackStack("become_expert");
                                 fragmentTransaction.commit();
                             }
+                        } else if (item.getItemId() == R.id.ManageAppointment) {
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Manager_Appointment_Booking_Fragment managerAppointmentFragment = new Manager_Appointment_Booking_Fragment();
+                            fragmentTransaction.replace(R.id.layout_container, managerAppointmentFragment, "managerAppointmentUser");
+                            fragmentTransaction.addToBackStack("managerAppointmentUser");
+                            fragmentTransaction.commit();
+
                         }
                         return true;
                     }
@@ -87,7 +108,7 @@ public class ContainerActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        //imgMenu =findViewById(R.id.imgMenu);
+        imgListAppointmentExpert = findViewById(R.id.listAppointmentExpert);
         imgAvatar = findViewById(R.id.imgAvatar);
         User user = (User) getIntent().getSerializableExtra("user");
         Bundle bundle = new Bundle();
@@ -103,16 +124,17 @@ public class ContainerActivity extends AppCompatActivity {
         fragmentTransaction.addToBackStack("landing_page");
         fragmentTransaction.commit();
     }
-    public void AppExit()
-    {
+
+    public void AppExit() {
         this.finish();
-        Intent intent= new Intent(Intent.ACTION_MAIN);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
         System.exit(0);
     }
+
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 1) {

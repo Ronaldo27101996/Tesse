@@ -110,9 +110,6 @@
                     android:hint="Password" />
             </LinearLayout>
 
-
-
-
             <Button
                 android:id="@+id/btnSave"
                 android:layout_gravity="center"

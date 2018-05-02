@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog mProgressDialog;
     public static int isExpert = 0;
+    public static String USER_ID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (users.size() != 0) {
                     hideDialog();
                     final User user = users.get(0);
+                    USER_ID = user.getIdUser();
                     if (user.getIsExpert() == 0) {
                         isExpert = 0;
 
